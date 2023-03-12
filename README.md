@@ -1,4 +1,4 @@
-# First Term Project. Fundamentals of programming (Course  22/23)
+# Second Term Project. Fundamentals of programming (Course  22/23)
 Author: Ignacio Mora Pérez.  uvus: ignmorper1
 
 This dataset consists on the information registered from different accidents that caused deaths or serious injuries in Catalonia. Data was taken between 2010 and 2020 by the [Catalan Traffic Service](https://interior.gencat.cat/es/serveis/localitzador_de_comissaries/transit/).
