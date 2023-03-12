@@ -1,12 +1,12 @@
 package fp.domain;
-import fp.common.Victims;
-import fp.common.Climate;
+import fp.common.*;
 
-import java.util.*;
-import java.time.*;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Objects;
 
-public class Accident implements Comparable<Accident>{
+public class Accident implements Comparable<Accident> {
 	
 	// BASIC PROPERTIES
 	
@@ -23,9 +23,14 @@ public class Accident implements Comparable<Accident>{
 	public Accident(LocalDate date, String location, Victims victims, Integer speed, Boolean escapist, Climate climate, List<String> info) {
 		if (date.compareTo(LocalDate.now()) > 0) {
 			
-			//CONSTRAINT 1: The accident's date must be lower or equal than today's date
+			// RESTRICTION 1: The accident's date must be lower or equal than today's date
 			
-			throw new IllegalArgumentException("Invalid date");
+			throw new IllegalArgumentException("Invalid date");			
+		} else if (speed <= 0) {
+			
+			// RESTRICTION 2: The maximum speed cannot be negative
+
+			throw new IllegalArgumentException("Invalid speed");
 		} else {
 		this.date = date;
 		this.location = location;
@@ -35,6 +40,7 @@ public class Accident implements Comparable<Accident>{
 		this.climate = climate;
 		this.info = info;
 		}
+		
 	}
 	
 	// 2ND CONSTRUCTOR: Receives a string and splits it.
@@ -64,7 +70,7 @@ public class Accident implements Comparable<Accident>{
 			
 		} else {
 			
-			// CONSTRAINT 2: String must have 15 values
+			// RESTRICTION 2: String must have 15 values
 			
 			throw new IllegalArgumentException("Incorrect string format");
 		}
@@ -146,6 +152,5 @@ public class Accident implements Comparable<Accident>{
 		}
 		return res;
 	}
-	
 		
 }
