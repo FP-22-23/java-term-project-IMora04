@@ -26,7 +26,7 @@ public class Accident implements Comparable<Accident> {
 			// RESTRICTION 1: The accident's date must be lower or equal than today's date
 			
 			throw new IllegalArgumentException("Invalid date");			
-		} else if (speed <= 0) {
+		} else if (speed != null && speed <= 0) {
 			
 			// RESTRICTION 2: The maximum speed cannot be negative
 
@@ -49,28 +49,34 @@ public class Accident implements Comparable<Accident> {
 		String[] values = s.split(",");
 		
 		if (values.length == 15) {
-			date = LocalDate.parse(values[0], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-			location = values[1] + ", " + values[2] + ", " + values[3];
-			victims = new Victims(Integer.valueOf(values[4]), Integer.valueOf(values[5]), Integer.valueOf(values[6]));
-			speed = Integer.valueOf(values[7].trim());
-			switch(values[8].trim()) {
-			case "Yes": escapist = true; break;
-			case "No": escapist = false; break;
-			default: escapist = null;
+			date = LocalDate.parse(values[0].trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			location = values[1].trim() + ", " + values[2].trim() + ", " + values[3].trim();
+			victims = new Victims(Integer.valueOf(values[4].trim()), Integer.valueOf(values[5].trim()), Integer.valueOf(values[6].trim()));
+			speed = (!values[7].trim().equals("NA")) ? Integer.valueOf(values[7].trim()) : null;
+			switch(values[8].trim().toLowerCase()) {
+				case "yes": escapist = true; break;
+				case "no": escapist = false; break;
+				default: escapist = null;
 			}
-			switch(values[9]) {
-			case "Good weather": climate = Climate.GOOD_WEATHER; break;
-			case "Heavy rain": climate = Climate.HEAVY_RAIN; break;
-			case "Light rain": climate = Climate.LIGHT_RAIN; break;
-			case "Hail": climate = Climate.HAIL; break;
-			case "Snowing": climate = Climate.SNOWING; break;
-			default: climate = Climate.UNSPECIFIED;
+			switch(values[9].trim().toLowerCase()) {
+				case "good weather": 	climate = Climate.GOOD_WEATHER; break;
+				case "heavy rain": 		climate = Climate.HEAVY_RAIN; break;
+				case "light rain": 		climate = Climate.LIGHT_RAIN; break;
+				case "hail": 			climate = Climate.HAIL; break;
+				case "snowing": 		climate = Climate.SNOWING; break;
+				default: 				climate = Climate.UNSPECIFIED;
 			}
-			info = List.of(values[10], values[11], values[12], values[13], values[14]);
+			info = List.of(
+					values[10].trim(),
+					values[11].trim(),
+					values[12].trim(),
+					values[13].trim(),
+					values[14].trim()
+					);
 			
 		} else {
 			
-			// RESTRICTION 2: String must have 15 values
+			// RESTRICTION 3: String must have 15 values
 			
 			throw new IllegalArgumentException("Incorrect string format");
 		}

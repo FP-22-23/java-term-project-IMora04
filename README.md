@@ -86,7 +86,7 @@ The **equality criterion** followed by this type indicates that, in order to be 
 
 This type does not follow any natural order criterion (**not comparable**).
 
-When represented as a **String**, every property is shown in the same format as in type *Accident*
+When represented as a **String**, every property is shown in the same format as in type *Accident*.
 
 ### Secondary types - Climate
 
