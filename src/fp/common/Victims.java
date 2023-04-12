@@ -10,7 +10,7 @@ public class Victims {
 	
 	public Victims(Integer deaths, Integer serious_inj, Integer slight_inj) {
 		
-		// CONSTRAINT 3: Number of victims must be greater or equal to 0
+		// RESTRICTION: Number of victims must be greater or equal to 0
 		
 		if (deaths >= 0 && serious_inj >= 0 && slight_inj >= 0) {
 			this.deaths = deaths;

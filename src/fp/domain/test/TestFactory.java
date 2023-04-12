@@ -6,7 +6,7 @@ public class TestFactory {
 	
 	public static void readFileTest(String route) {
 		System.out.println("FACTORY READFILE TEST: ");
-		System.out.println("\tAccidents in the file: ");
+		System.out.println("\tAccidents: (First 25) ");
 		TestAccidents.showAccidents(FactoryAccident.readFile(route).getSublist(0, 100));
 	}
 	

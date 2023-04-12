@@ -24,6 +24,12 @@ public class TestAccidents {
 		}
 	}
 	
+	public static <K, V> void mapToString(Map<K, V> m) {
+		for(Map.Entry<K, V> e:m.entrySet()) {
+			System.out.println(e.getKey() + ": " + e.getValue());
+		}
+	}
+	
 	public static void constructor1Test() {
 		System.out.println("FIRST CONSTRUCTOR TEST (Accidents, empty): ");
 		try {
@@ -68,12 +74,6 @@ public class TestAccidents {
 			showAccidents(l.subList(0, 5));
 		} else {
 			showAccidents(l);
-		}
-	}
-	
-	public static <K, V> void mapToString(Map<K, V> m) {
-		for(Map.Entry<K, V> e:m.entrySet()) {
-			System.out.println(e.getKey() + ": " + e.getValue());
 		}
 	}
 	

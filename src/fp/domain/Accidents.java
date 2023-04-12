@@ -124,7 +124,7 @@ public class Accidents {
 	}
 	
 	public Accidents getSublist(int a, int b) {
-		return new Accidents(new ArrayList<>(accidents.subList(a, b)));
+		return new Accidents(accidents.subList(a, b));
 	}
 	
 	//STRING REPRESENTATION

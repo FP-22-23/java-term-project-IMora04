@@ -7,9 +7,9 @@ The dataset was initially structured in 58 different columns, but for the sake o
 ## Project folder structure
 
 * **/src**: Contains the Java packages that make up the project.
-  * **fp.domain**: This package contains the main type class, Accident.java
-  * **fp.domain.test**: Inside the previous package, it contains the test for the main type, TestAccident.java
-  * **fp.common**: It contains the auxiliary types used by Accident.java properties: Climate.java (Enum) and Victims.java (Class)
+  * **fp.domain**: This package contains the main type class, `Accident.java`, its container type, `Accidents.java`, and its factory, `FactoryAccident.java`
+  * **fp.domain.test**: Inside the previous package, it contains the test for the types in *fp.domain*: `TestAccident.java`, `TestAccidents.java` and `TestFactory.java`
+  * **fp.common**: It contains the auxiliary types used by `Accident.java` properties: `Climate.java` (Enum) and `Victims.java` (Class)
 * **/data**: Contains the project dataset.
    * **Accidents_catalonia.csv**: CSV file with the data of the accidents.
     
@@ -67,6 +67,42 @@ This type is defined in the file  `Accident.java`. Each object of the type Accid
 **Natural order criterion**: Accidents will be order by date. If both accidents have the same date, they will be ordered by location.
 
 **String representation**: If we want to represent an accident as a string, every property (basic and derived) will be expressed in the format "*propertyName*=*propertyValue*"
+
+### Factory - FactoryAccident
+
+This class is a factory of the main type Accident, which is used to create objects of the type Accidents by reading CSV files. It does so with the following methods:
+
+- *parseLine(String line)*: Given a String (Usually, a line of the CSV file read), it returns an object of the type Accident, by using the 1st constructor defined in `Accident.java`.
+- *readFile(String route)*: Given the route of the CSV file as a string, it converts the information contained into an object of the type Accidents. It uses the previous method for each line, and then stores every Accident in the container type.
+
+### Container type - Accidents
+
+This is a container type that stores objects of type Accident.
+
+It has just one **property**: *accidents*, of type List<Accident>, gettable. Is the list of the accidents stored.
+
+**Constructors**:
+
+* **C1**: The first constructor creates an empty Accidents object.
+* **C2**: The second constructor receives a collection of Accidents as parameter, and returns an Accidents object containing all the elements in the collection received.
+
+**Equality criterion**: Two Accidents objects are equal to each other if they contain the same accidents. Repetition or position stored is not taken into account.
+
+**Basic methods**:
+* *List<Accident> getAccidentList()*: Returns the list of accidents.
+* *int getNumberAccidents()*: Returns the size of the list of accidents.
+* *void addAccident(Accident a)*: Adds the accident *a* to the list of accidents.
+* *void addAccidents(Collection<Accident> c)*: Adds all the elements contained in *c* to the list of accidents.
+* *void removeAccident(Accident a)*: Removes the accident *a* of the list, if it is contained in it.
+
+**Sequential methods**:
+* *boolean allInYear(int y)*: Returns *true* if all the accidents in the list have happened in the year *y*. If not, it returns *false*.
+* *double avgVictims()*: Returns the average of the total number of victims of all the accidents in the object.
+* *List<Accident> filterByYear(int y)*: Creates a new list of accidents containing only the accidents that have happened in the year *y*.
+* *Map<String, List<Accident>> groupByLocation()*: This method groups every accident by its corresponding location. The map returned associates the location to the list of accidents that happened there.
+* *Map<Climate, Integer> countByClimate()*: This map associates the different types of climate with the number of accidents that have happened with that climate.
+  
+A secondary method, *Accidents getSublist(int a, int b)*, is also defined in this class. It will be used to simplify the output of the tests.
 
 ### Secondary types - Victims
 
