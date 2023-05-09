@@ -46,7 +46,7 @@ This type is defined in the file  `Accident.java`. Each object of the type Accid
   * *speed*, of type *Integer*, gettable. Indicates the maximum speed allowed in the road where the accident happened.
   * *escapist*, of type *Boolean*, gettable. Stores *true* if the value of the column *Escapists* is "Yes", and *false* if the value is "No". If the value is "Unspecified", it stores null.
   * *climate*, of type *Climate*, gettable. Specifies the weather during the accident
-  * *info*, of type *List<String>*, gettable. It is a list with extra information about the accident, taken from the rows *Type*, *Subtype*, *Subzone*, *Moment*, and *Wind* (In that specific order).
+  * *info*, of type *List\<String\>*, gettable. It is a list with extra information about the accident, taken from the rows *Type*, *Subtype*, *Subzone*, *Moment*, and *Wind* (In that specific order).
 
 * **Derived properties:**
   * *deathsProportion*, of type *Double*. Derivated from the basic property *Victims*, it uses methods from Victims.java to get the proportion of deaths with respect to the total number of victims. This value will always be between 0 and 1.
@@ -80,7 +80,7 @@ This class is a factory of the main type Accident, which is used to create objec
 
 This is a container type that stores objects of type Accident.
 
-It has just one **basic property**: *accidents*, of type List<Accident>, gettable. Is the list of the accidents stored.
+It has just one **basic property**: *accidents*, of type List\<Accident\>, gettable. Is the list of the accidents stored.
 
 **Constructors**:
 
@@ -91,10 +91,10 @@ It has just one **basic property**: *accidents*, of type List<Accident>, gettabl
 **Equality criterion**: Two Accidents objects are equal to each other if they contain the same accidents. Repetition or position stored is not taken into account.
 
 **Basic methods**:
-* *List<Accident> getAccidentList()*: Returns the list of accidents.
+* *List\<Accident\> getAccidentList()*: Returns the list of accidents.
 * *int getNumberAccidents()*: Returns the size of the list of accidents.
 * *void addAccident(Accident a)*: Adds the accident *a* to the list of accidents.
-* *void addAccidents(Collection<Accident> c)*: Adds all the elements contained in *c* to the list of accidents.
+* *void addAccidents(Collection\<Accident\> c)*: Adds all the elements contained in *c* to the list of accidents.
 * *void removeAccident(Accident a)*: Removes the accident *a* of the list, if it is contained in it.
 
 A secondary method, *Accidents getSublist(int a, int b)*, is also defined in this class. It will be used to simplify the output of the tests.
@@ -102,20 +102,20 @@ A secondary method, *Accidents getSublist(int a, int b)*, is also defined in thi
 **Sequential methods**:
 * *boolean allInYear(int y)*: Returns *true* if all the accidents in the list have happened in the year *y*. If not, it returns *false*.
 * *double avgVictims()*: Returns the average of the total number of victims of all the accidents in the object.
-* *List<Accident> filterByYear(int y)*: Creates a new list of accidents containing only the accidents that have happened in the year *y*.
-* *Map<String, List<Accident>> groupByLocation()*: This method groups every accident by its corresponding location. The map returned associates the location to the list of accidents that happened there.
-* *Map<Climate, Integer> countByClimate()*: This map associates the different types of climate with the number of accidents that have happened with that climate.
+* *List\<Accident\> filterByYear(int y)*: Creates a new list of accidents containing only the accidents that have happened in the year *y*.
+* *Map\<String, List\<Accident\>\> groupByLocation()*: This method groups every accident by its corresponding location. The map returned associates the location to the list of accidents that happened there.
+* *Map\<Climate, Integer\> countByClimate()*: This map associates the different types of climate with the number of accidents that have happened with that climate.
   
 **Stream methods**:
 * *boolean allInYearStream(int y)*: Returns *true* if all the accidents in the list have happened in the year *y*, just like the *allInYear* method.
 * *double avgVictimsStream()*: Exactly the same functionality as the *avgVictims()* method.
-* *List<Accident> filterByYearStream(int y)*: As the method *filterByYear*, it creates a list of accidents containing only the accidents that have happened in the year *y*.
+* *List\<Accident\> filterByYearStream(int y)*: As the method *filterByYear*, it creates a list of accidents containing only the accidents that have happened in the year *y*.
 * *Integer maxSpeedOnClimate(Climate c)*: This method receives a Climate as a parameter, and returns the value of the maximum speed at which an accident occurred with that climate.
-* *SortedSet<Accident> sortedVictimsWithEscapists()*: This method returns a SortedSet with the Accidents in which there were escapists, sorted by the number of total victims (from higher to lower).
-* *Map<String, List<Accident>> groupByLocationStream()*: This method works in the same way as *groupByLocation*. It groups accidents by its location.
-* *Map<LocalDate, Victims> accidentMostVictimsByDate()*: It returns a Map that associates every date with the maximum number of victims among all the accidents that occurred at that date (or null, if there were not).
-* *Map<String, List<Integer>> groupSpeedsByType()*: This method takes the first element of the list *info* to group values of speed of accidents according to the type of accident it was.
-* *SortedMap<Climate, List<Accident>> groupByClimateEarliest(int n)*: This method returns a SortedMap, in which keys are the different Climates for which accidents have happened, and values are lists with the first *n* accidents that occurred with that climate, sorted by earliest. If n is greater than the number of accidents with that corresponding climate, all those accidents will be inside the list.
+* *SortedSet\<Accident\> sortedVictimsWithEscapists()*: This method returns a SortedSet with the Accidents in which there were escapists, sorted by the number of total victims (from higher to lower).
+* *Map\<String, List\<Accident\>\> groupByLocationStream()*: This method works in the same way as *groupByLocation*. It groups accidents by its location.
+* *Map\<LocalDate, Victims\> accidentMostVictimsByDate()*: It returns a Map that associates every date with the maximum number of victims among all the accidents that occurred at that date (or null, if there were not).
+* *Map\<String, List\<Integer\>\> groupSpeedsByType()*: This method takes the first element of the list *info* to group values of speed of accidents according to the type of accident it was.
+* *SortedMap\<Climate, List\<Accident\>\> groupByClimateEarliest(int n)*: This method returns a SortedMap, in which keys are the different Climates for which accidents have happened, and values are lists with the first *n* accidents that occurred with that climate, sorted by earliest. If n is greater than the number of accidents with that corresponding climate, all those accidents will be inside the list.
 
 ### Secondary types - Victims
 
