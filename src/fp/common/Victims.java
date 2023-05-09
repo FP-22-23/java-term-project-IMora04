@@ -2,7 +2,9 @@ package fp.common;
 
 import java.util.Objects;
 
-public class Victims {
+import fp.domain.Accident;
+
+public class Victims implements Comparable<Victims>{
 
 	private Integer deaths;
 	private Integer serious_inj;
@@ -57,5 +59,14 @@ public class Victims {
 		return "Victims [Deaths=" + getDeaths() + ", SeriouslyInjured=" + getSeriouslyInjured()
 				+ ", SlightlyInjured=" + getSlightlyInjured() + ", TotalVictims=" + getTotalVictims() + "]";
 	}
+	
+	public int compareTo(Victims o) {
+		int res = getTotalVictims().compareTo(o.getTotalVictims());
+		if (res == 0) {
+			res = getDeaths().compareTo(o.getDeaths());
+		}
+		return res;
+	}
+
 
 }

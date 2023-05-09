@@ -16,7 +16,7 @@ public class Accident implements Comparable<Accident> {
 	private Integer speed;
 	private Boolean escapist;
 	private Climate climate;
-	private List<String> info; // LIST PROPERTY: Extra information about the accident (Type, subtype, subzone, wind, moment)
+	private List<String> info; // LIST PROPERTY: Extra information about the accident (type, subtype, subzone, moment, wind)
 	
 	// 1ST CONSTRUCTOR: Receives a value for every basic property
 	
@@ -67,11 +67,11 @@ public class Accident implements Comparable<Accident> {
 				default: 				climate = Climate.UNSPECIFIED;
 			}
 			info = List.of(
-					values[10].trim(),
-					values[11].trim(),
-					values[12].trim(),
-					values[13].trim(),
-					values[14].trim()
+					values[14].trim(),		//type	
+					values[10].trim(),		//subtype
+					values[11].trim(),		//subzone
+					values[13].trim(),		//moment
+					values[12].trim()		//wind
 					);
 			
 		} else {

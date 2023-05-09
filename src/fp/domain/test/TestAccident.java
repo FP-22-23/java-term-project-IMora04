@@ -82,7 +82,7 @@ public class TestAccident {
 		
 		System.out.println("\n--- Using two random accidents from the CSV file (a1: index 29, a2: index 39) ---");
 		
-		Accidents shortAccidents = FactoryAccident.readFile(
+		Accidents shortAccidents = FactoryAccident.readFileContainer(
 				"/Users/ignacio/Desktop/US/1st_year/2C/FP/LAB/java-term-project-IMora04/data/Accidents_Catalonia.csv"
 				).getSublist(0, 100);
 		System.out.println();
