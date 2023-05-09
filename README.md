@@ -133,7 +133,7 @@ The **restriction** included in this type states that every property must be gre
 
 The **equality criterion** followed by this type indicates that, in order to be equal, two objects must have the same number of deahts and seriously/slightly injured victims.
 
-For later use in `Accidents.java`, this type implements the interface **Comparable<Victims>**, so that different objects of the same type can be compared. The first value taken into account is the value of the total victims. If two objects have the same total victims, the "greater" will be the one with the greatest number of deaths.
+For later use in `Accidents.java`, this type implements the interface **Comparable\<Victims\>**, so that different objects of the same type can be compared. The first value taken into account is the value of the total victims. If two objects have the same total victims, the "greater" will be the one with the greatest number of deaths.
 
 When represented as a **String**, every property is shown in the same format as in type *Accident*.
 
