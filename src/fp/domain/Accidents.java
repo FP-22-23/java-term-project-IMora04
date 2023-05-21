@@ -20,28 +20,29 @@ import fp.common.Climate;
 import fp.common.Victims;
 
 public class Accidents {
-	
+
 	private List<Accident> accidents;
-		
-	//CONSTRUCTOR 1: Empty
-	
+
+	// CONSTRUCTOR 1: Empty
+
 	public Accidents() {
 		this.accidents = new ArrayList<Accident>();
 	}
-	
-	//CONSTRUCTOR 2: From collection of accidents
-	
+
+	// CONSTRUCTOR 2: From collection of accidents
+
 	public Accidents(Collection<Accident> c) {
 		this.accidents = new ArrayList<Accident>(c);
 	}
-	
-	//CONSTRUCTOR 3: From stream of accidents
-	
+
+	// CONSTRUCTOR 3: From stream of accidents
+
 	public Accidents(Stream<Accident> s) {
 		this.accidents = s.collect(Collectors.toCollection(ArrayList<Accident>::new));
 	}
-	
-	//EQUALITY CRITERION: Accidents are equal to another if the same accidents are inside both lists (order and number does not matter)
+
+	// EQUALITY CRITERION: Accidents are equal to another if the same accidents are
+	// inside both lists (order and number does not matter)
 
 	public int hashCode() {
 		return Objects.hash(accidents);
@@ -57,70 +58,91 @@ public class Accidents {
 		Accidents other = (Accidents) obj;
 		return Objects.equals(new HashSet<Accident>(accidents), new HashSet<Accident>(other.accidents));
 	}
-	
-	//METHODS
-	
+
+	// METHODS
+
 	public Accidents getSublist(int a, int b) {
 		return new Accidents(accidents.subList(a, b));
 	}
-	
+
 	public List<Accident> getAccidentList() {
 		return accidents;
 	}
-		
+
 	public int getNumberAccidents() {
 		return accidents.size();
 	}
-	
+
 	public void addAccident(Accident a) {
 		accidents.add(a);
 	}
-	
+
 	public void addAccidents(Collection<Accident> c) {
 		accidents.addAll(c);
 	}
-	
+
 	public void removeAccident(Accident a) {
 		accidents.remove(a);
 	}
-	
-	//SEQUENTIAL TREATMENT METHODS
-	
+
+	// SEQUENTIAL TREATMENT METHODS
+
 	public boolean allInYear(int y) {
 		boolean res = true;
-		for(Accident a:accidents) {
-			if(!(a.getDate().getYear() == y)) {
+		for (Accident a : accidents) {
+			if (!(a.getDate().getYear() == y)) {
 				res = false;
 				break;
 			}
 		}
 		return res;
 	}
-	
+
+	public boolean anyInYear(int y) {
+		boolean res = false;
+		for (Accident a : accidents) {
+			if (a.getDate().getYear() == y) {
+				res = true;
+				break;
+			}
+		}
+		return res;
+	}
+
 	public double avgVictims() {
 		int count = 0;
 		int victims = 0;
-		for(Accident a:accidents) {
+		for (Accident a : accidents) {
 			count++;
 			victims += a.getVictims().getTotalVictims();
 		}
-		return (double) victims/count;
+		return (double) victims / count;
 	}
-	
+
+	public int countWithDeaths() {
+		int count = 0;
+		for (Accident a : accidents) {
+			if (!a.getVictims().getDeaths().equals(0)) {
+				count++;
+			}
+		}
+		return count;
+	}
+
 	public List<Accident> filterByYear(int y) {
 		List<Accident> accidents_y = new ArrayList<>();
-		for (Accident a:accidents) {
-			if(a.getDate().getYear() == y) {
+		for (Accident a : accidents) {
+			if (a.getDate().getYear() == y) {
 				accidents_y.add(a);
 			}
 		}
 		return accidents_y;
 	}
-	
+
 	public Map<String, List<Accident>> groupByLocation() {
 		Map<String, List<Accident>> m = new HashMap<>();
-		for(Accident a:accidents) {
-			if(m.containsKey(a.getLocation())) { 
+		for (Accident a : accidents) {
+			if (m.containsKey(a.getLocation())) {
 				m.get(a.getLocation()).add(a);
 			} else {
 				m.put(a.getLocation(), new ArrayList<>(List.of(a)));
@@ -128,12 +150,12 @@ public class Accidents {
 		}
 		return m;
 	}
-	
+
 	public Map<Climate, Integer> countByClimate() {
 		Map<Climate, Integer> m = new HashMap<>();
-		for(Accident a:accidents) {
+		for (Accident a : accidents) {
 			Climate c = a.getClimate();
-			if(m.containsKey(c)) {
+			if (m.containsKey(c)) {
 				m.put(c, m.get(c) + 1);
 			} else {
 				m.put(c, 1);
@@ -141,83 +163,81 @@ public class Accidents {
 		}
 		return m;
 	}
-		
-	//STREAM METHODS
-		
+
+	// STREAM METHODS
+
 	public boolean allInYearStream(int y) {
-		return accidents.size() == accidents.stream().filter(t->t.getDate().getYear() == y).count();
+		return accidents.stream().allMatch(t -> t.getDate().getYear() == y);
 	}
-	
-	public double avgVictimsStream() {		
-		return accidents.stream().mapToInt(t->t.getVictims().getTotalVictims()).average().orElse(0);
+
+	public boolean anyInYearStream(int y) {
+		return accidents.stream().anyMatch(t -> t.getDate().getYear() == y);
+	}
+
+	public double avgVictimsStream() {
+		return accidents.stream().mapToInt(t -> t.getVictims().getTotalVictims()).average().orElse(0);
+	}
+
+	public int countWithDeathsStream() {
+		return (int) accidents.stream().filter(t -> !t.getVictims().getDeaths().equals(0)).count();
 	}
 
 	public List<Accident> filterByYearStream(int y) {
-		return accidents.stream().
-				filter(t->t.getDate().getYear() == y).
-				collect(Collectors.toCollection(ArrayList::new));
+		return accidents.stream().filter(t -> t.getDate().getYear() == y)
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
-	
+
 	public Integer maxSpeedOnClimate(Climate c) {
-		return accidents.stream().
-				filter(t->t.getClimate().equals(c) && t.getSpeed() != null).
-				mapToInt(t->t.getSpeed()).
-				max().
-				orElse(0);
+		return accidents.stream().filter(t -> t.getClimate().equals(c) && t.getSpeed() != null)
+				.mapToInt(t -> t.getSpeed()).max().orElse(0);
 	}
-	
+
 	public SortedSet<Accident> sortedVictimsWithEscapists() {
-		return accidents.stream().
-				filter(t->t.getEscapist() != null && t.getEscapist().equals(Boolean.TRUE)).
-				collect(Collectors.toCollection(
-						() -> new TreeSet<Accident>(
-								Comparator.comparing(
-										t->t.getVictims().getTotalVictims(),
-										Comparator.reverseOrder()))));
+		return accidents.stream().filter(t -> t.getEscapist() != null && t.getEscapist().equals(Boolean.TRUE))
+				.collect(Collectors.toCollection(() -> new TreeSet<Accident>(
+						Comparator.comparing(t -> t.getVictims().getTotalVictims(), Comparator.reverseOrder()))));
 	}
-	
+
 	public Map<String, List<Accident>> groupByLocationStream() {
-		return accidents.stream().
-				collect(Collectors.groupingBy(t->t.getLocation(),
-						Collectors.toList()));
+		return accidents.stream().collect(Collectors.groupingBy(t -> t.getLocation(), Collectors.toList()));
 	}
-	
+
+	public Map<Climate, Integer> countByClimateStream() {
+		return accidents.stream().collect(Collectors.groupingBy(t -> t.getClimate(),
+				Collectors.collectingAndThen(Collectors.toList(), t -> t.size())));
+	}
+
 	public Map<LocalDate, Victims> accidentMostVictimsByDate() {
-		return accidents.stream()
-				.collect(Collectors.groupingBy(t->t.getDate(),
-						Collectors.collectingAndThen(
-								Collectors.maxBy(
-										Comparator.comparing(t->t.getVictims())),
-								opt->opt.orElse(null).getVictims())));
+		return accidents.stream().collect(Collectors.groupingBy(t -> t.getDate(), Collectors.collectingAndThen(
+				Collectors.maxBy(Comparator.comparing(t -> t.getVictims())), opt -> opt.orElse(null).getVictims())));
 	}
-		
+
 	public Map<String, List<Integer>> groupSpeedsByType() {
-		return accidents.stream().
-				collect(Collectors.groupingBy(t->t.getInfo().get(0),
-						Collectors.mapping(t->t.getSpeed(), Collectors.toList())
-						));
+		return accidents.stream().collect(Collectors.groupingBy(t -> t.getInfo().get(0),
+				Collectors.mapping(t -> t.getSpeed(), Collectors.toList())));
 	}
-		
+
 	public SortedMap<Climate, List<Accident>> groupByClimateEarliest(int n) {
-		return accidents.stream().
-				sorted(Comparator.comparing(t->t.getDate(),
-						Comparator.reverseOrder())).
-				collect(Collectors.groupingBy(
-						t->t.getClimate(),
-						TreeMap::new,
-						Collectors.collectingAndThen(
-								Collectors.toList(),
-								l->(l.size()<n) ? l:l.subList(0, n))));
+		return accidents.stream().sorted(Comparator.comparing(t -> t.getDate(), Comparator.reverseOrder()))
+				.collect(Collectors.groupingBy(t -> t.getClimate(), TreeMap::new,
+						Collectors.collectingAndThen(Collectors.toList(), l -> (l.size() < n) ? l : l.subList(0, n))));
 	}
-	
-	//STRING REPRESENTATION
+
+	public String getLocationMostVictims() {
+		return groupByLocationStream().entrySet().stream()
+				.map(e -> Map.entry(e.getKey(),
+						e.getValue().stream().map(t -> t.getVictims()).max(Comparator.naturalOrder()).orElse(null)))
+				.max(Comparator.comparing(e -> e.getValue())).get().getKey();
+	}
+
+	// STRING REPRESENTATION
 
 	public String toString() {
 		String accidentsString = "";
-		for(int i = 0; i < accidents.size() && i < 100; i++) {
+		for (int i = 0; i < accidents.size() && i < 100; i++) {
 			accidentsString = accidentsString + "\n" + accidents.get(i);
 		}
-		return "Number of accidents: " + getNumberAccidents() + ", Accidents (first 100): " + accidentsString ;
+		return "Number of accidents: " + getNumberAccidents() + ", Accidents (first 100): " + accidentsString;
 	}
-	
+
 }

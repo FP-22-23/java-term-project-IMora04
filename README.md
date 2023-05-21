@@ -101,21 +101,27 @@ A secondary method, *Accidents getSublist(int a, int b)*, is also defined in thi
 
 **Sequential methods**:
 * *boolean allInYear(int y)*: Returns *true* if all the accidents in the list have happened in the year *y*. If not, it returns *false*.
+* *boolean anyInYear(int y)*: Similar to the previous method. Returns true if any Accident has occurred int the year specified.
 * *double avgVictims()*: Returns the average of the total number of victims of all the accidents in the object.
+* *int countWithDeaths()*: Counts the number of accidents with deaths involved.
 * *List\<Accident\> filterByYear(int y)*: Creates a new list of accidents containing only the accidents that have happened in the year *y*.
 * *Map\<String, List\<Accident\>\> groupByLocation()*: This method groups every accident by its corresponding location. The map returned associates the location to the list of accidents that happened there.
 * *Map\<Climate, Integer\> countByClimate()*: This map associates the different types of climate with the number of accidents that have happened with that climate.
   
 **Stream methods**:
 * *boolean allInYearStream(int y)*: Returns *true* if all the accidents in the list have happened in the year *y*, just like the *allInYear* method.
+* *boolean anyInYearStream(int y)*: As in *anyInYear*, returns *true* if any accident occurred in year *y*.
 * *double avgVictimsStream()*: Exactly the same functionality as the *avgVictims()* method.
+* *int countWithDeathsStream()*: Work just as *countWithDeaths* method.
 * *List\<Accident\> filterByYearStream(int y)*: As the method *filterByYear*, it creates a list of accidents containing only the accidents that have happened in the year *y*.
 * *Integer maxSpeedOnClimate(Climate c)*: This method receives a Climate as a parameter, and returns the value of the maximum speed at which an accident occurred with that climate.
 * *SortedSet\<Accident\> sortedVictimsWithEscapists()*: This method returns a SortedSet with the Accidents in which there were escapists, sorted by the number of total victims (from higher to lower).
 * *Map\<String, List\<Accident\>\> groupByLocationStream()*: This method works in the same way as *groupByLocation*. It groups accidents by its location.
+* *Map\<Climate, Integer\> countByClimateStream()*: Works in the same way as *countByClimate*. Returns a Map in which keys are all different climates, and values are the number of accidents that happened during that climate.
 * *Map\<LocalDate, Victims\> accidentMostVictimsByDate()*: It returns a Map that associates every date with the maximum number of victims among all the accidents that occurred at that date (or null, if there were not).
 * *Map\<String, List\<Integer\>\> groupSpeedsByType()*: This method takes the first element of the list *info* to group values of speed of accidents according to the type of accident it was.
 * *SortedMap\<Climate, List\<Accident\>\> groupByClimateEarliest(int n)*: This method returns a SortedMap, in which keys are the different Climates for which accidents have happened, and values are lists with the first *n* accidents that occurred with that climate, sorted by earliest. If n is greater than the number of accidents with that corresponding climate, all those accidents will be inside the list.
+* *String getLocationMostVictims()*: It uses the previous method *groupByLocationStream()* to get a map with accidents grouped by their location. Then, it operates over it to get the location where the accident with the most number of victims has happened.
 
 ### Secondary types - Victims
 

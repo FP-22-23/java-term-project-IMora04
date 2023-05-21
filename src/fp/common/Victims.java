@@ -2,25 +2,23 @@ package fp.common;
 
 import java.util.Objects;
 
-import fp.domain.Accident;
+import fp.utils.Checkers;
 
-public class Victims implements Comparable<Victims>{
+public class Victims implements Comparable<Victims> {
 
 	private Integer deaths;
 	private Integer serious_inj;
 	private Integer slight_inj;
-	
+
 	public Victims(Integer deaths, Integer serious_inj, Integer slight_inj) {
-		
+
 		// RESTRICTION: Number of victims must be greater or equal to 0
-		
-		if (deaths >= 0 && serious_inj >= 0 && slight_inj >= 0) {
-			this.deaths = deaths;
-			this.serious_inj = serious_inj;
-			this.slight_inj = slight_inj;
-		} else {
-			throw new IllegalArgumentException("Incorrect victims value");
-		}
+
+		Checkers.check("Incorrec victims value", deaths >= 0 && serious_inj >= 0 && slight_inj >= 0);
+
+		this.deaths = deaths;
+		this.serious_inj = serious_inj;
+		this.slight_inj = slight_inj;
 	}
 
 	public Integer getDeaths() {
@@ -34,7 +32,7 @@ public class Victims implements Comparable<Victims>{
 	public Integer getSlightlyInjured() {
 		return slight_inj;
 	}
-	
+
 	public Integer getTotalVictims() {
 		return getSeriouslyInjured() + getSlightlyInjured() + getDeaths();
 	}
@@ -56,10 +54,10 @@ public class Victims implements Comparable<Victims>{
 	}
 
 	public String toString() {
-		return "Victims [Deaths=" + getDeaths() + ", SeriouslyInjured=" + getSeriouslyInjured()
-				+ ", SlightlyInjured=" + getSlightlyInjured() + ", TotalVictims=" + getTotalVictims() + "]";
+		return "Victims [Deaths=" + getDeaths() + ", SeriouslyInjured=" + getSeriouslyInjured() + ", SlightlyInjured="
+				+ getSlightlyInjured() + ", TotalVictims=" + getTotalVictims() + "]";
 	}
-	
+
 	public int compareTo(Victims o) {
 		int res = getTotalVictims().compareTo(o.getTotalVictims());
 		if (res == 0) {
@@ -67,6 +65,5 @@ public class Victims implements Comparable<Victims>{
 		}
 		return res;
 	}
-
 
 }
